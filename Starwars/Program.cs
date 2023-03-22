@@ -17,22 +17,22 @@ namespace Starwars
             Program program = new Program();
 
 
-            //program.One(planets);
-            //program.Two(planets);
-            //program.Three(planets);
-            //program.Four(planets);
-            //program.Five(planets);
-            //program.Six(planets);
-            //program.Seven(planets);
-            //program.Eight(planets);
-            //program.Nine(planets);
-            //program.Ten(planets);
+            program.One(planets);
+            program.Two(planets);
+            program.Three(planets);
+            program.Four(planets);
+            program.Five(planets);
+            program.Six(planets);
+            program.Seven(planets);
+            program.Eight(planets);
+            program.Nine(planets);
+            program.Ten(planets);
             program.Eleven(planets);
-            //program.Twelve(planets);
-            //program.Thirteen(planets);
-            //program.Fourteen(planets);
-            //program.Fifteen(planets);
-            //program.Sixteen(planets);
+            program.Twelve(planets);
+            program.Thirteen(planets);
+            program.Fourteen(planets);
+            program.Fifteen(planets);
+            program.Sixteen(planets);
         }
 
         void One(List<Planet> planets)
