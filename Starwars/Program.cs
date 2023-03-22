@@ -1,6 +1,8 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -12,10 +14,312 @@ namespace Starwars
         static void Main(string[] args)
         {
             List<Planet> planets = LoadData();
-            Console.ReadKey();
+            Program program = new Program();
+
+
+            //program.One(planets);
+            //program.Two(planets);
+            //program.Three(planets);
+            //program.Four(planets);
+            //program.Five(planets);
+            //program.Six(planets);
+            //program.Seven(planets);
+            //program.Eight(planets);
+            //program.Nine(planets);
+            //program.Ten(planets);
+            program.Eleven(planets);
+            //program.Twelve(planets);
+            //program.Thirteen(planets);
+            //program.Fourteen(planets);
+            //program.Fifteen(planets);
+            //program.Sixteen(planets);
         }
 
+        void One(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 1");
 
+            var query = from planet in planets
+                        where planet.Name.StartsWith("M")
+                        select planet;
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Two(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 2");
+
+            var query = from planet in planets
+                        where planet.Name.ToLower().Contains("y")
+                        select planet;
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Three(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 3");
+
+            var query = from planet in planets
+                        where planet.Name.Length > 9 && planet.Name.Length < 15
+                        select planet;
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Four(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 4");
+
+            var query = from planet in planets
+                        where planet.Name.IndexOf("a") == 1 && planet.Name.EndsWith("e")
+                        select planet;
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Five(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 5");
+
+            var query = from planet in planets
+                        where planet.RotationPeriod > 40
+                        orderby planet.RotationPeriod
+                        select planet;
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Six(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 6");
+
+            var query = from planet in planets
+                        where planet.RotationPeriod > 10 && planet.RotationPeriod < 20
+                        orderby planet.Name
+                        select planet;
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Seven(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 7");
+
+            var query = from planet in planets
+                        where planet.RotationPeriod > 30
+                        orderby planet.Name
+                        orderby planet.RotationPeriod
+                        select planet;
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Eight(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 8");
+
+            var query = from planet in planets
+                        where planet.Name.Contains("ba") && (planet.RotationPeriod < 30 || planet.SurfaceWater > 50)
+                        orderby planet.SurfaceWater
+                        orderby planet.RotationPeriod
+                        orderby planet.Name
+                        select planet;
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Nine(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 9");
+
+            var query = from planet in planets
+                        where planet.SurfaceWater > 0
+                        orderby planet.SurfaceWater descending
+                        select planet;
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Ten(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 10");
+
+            var query = from planet in planets
+                        where planet.Diameter != null && planet.Diameter != 0 &&
+                        planet.Population != null && planet.Population != 0
+                        orderby (4 * 3.14 * ((planet.Diameter / 2) * (planet.Diameter / 2))) / planet.Population ascending
+                        select planet;
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Eleven(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 11");
+
+            var query = from planet in planets.Except(
+                                                from planet in new List<Planet>(planets) 
+                                                where planet.RotationPeriod > 0 
+                                                select planet) 
+                        select planet;
+
+
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Twelve(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 12");
+
+            var queryStartsWithAorS = from planet in planets
+                                      where planet.Name.ToLower().StartsWith("a") ||
+                                      planet.Name.EndsWith("s")
+                                      select planet;
+
+            var queryWithRainforest = from planet in planets
+                                      where planet.Terrain != null
+                                      from terrain in planet.Terrain
+                                      where terrain.Contains("rainforest")
+                                      select planet;
+
+            var queryJoined = queryStartsWithAorS.Union(queryWithRainforest);
+
+            foreach (var planet in queryJoined)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Thirteen(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 13");
+
+            var query = from planet in planets
+                        where planet.Terrain != null
+                        from terrain in planet.Terrain
+                        where terrain.Contains("desert")
+                        select planet;
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Fourteen(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 14");
+
+            var query = from planet in planets
+                        where planet.Terrain != null
+                        from terrain in planet.Terrain
+                        where terrain.Contains("swamp")
+                        orderby planet.RotationPeriod
+                        orderby planet.Name
+                        select planet;
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Fifteen(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 15");
+
+            var query = from planet in planets
+                        where Regex.IsMatch(planet.Name, @"([aeiuoy])\1")
+                        select planet;
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
+
+        void Sixteen(List<Planet> planets)
+        {
+            Console.WriteLine("Opgave 16");
+
+            var query = from planet in planets 
+                        where Regex.IsMatch(planet.Name, @"([klrn])\1")
+                        orderby planet.Name descending
+                        select planet;
+
+            foreach (var planet in query)
+            {
+                Console.WriteLine(planet.Name);
+            }
+
+            Console.ReadLine();
+        }
 
         static List<Planet> LoadData()
         {
